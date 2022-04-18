@@ -125,7 +125,7 @@ app.get('/app/log/access', (req, res) => {
   }
 
   try {
-    const stmt = db.prepare('SELECT * FROM accesslog').get();
+    const stmt = db.prepare('SELECT * FROM accesslog').all();
     res.status(200).json(stmt);
   } catch (e) {
     console.error(e)
