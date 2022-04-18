@@ -107,6 +107,31 @@ app.get('/app/flip/call/tails', (req, res) => {
   res.end(JSON.stringify(call));
 });
 
+// /app/log/access
+app.get('/app/log/access', (req, res) => {
+  if (!args.debug) {
+    console.log('pass --debug to access the log');
+    return;
+  }
+
+  try {
+    const stmt = db.prepare('SELECT * FROM accesslog');
+    res.status(200).json(stmt)
+  } catch (e) {
+    console.error(e)
+  }
+});
+
+// /app/error
+app.get('/app/error', (req, res) => {
+  if (!args.debug) {
+    console.log('pass --debug to access the log');
+    return;
+  }
+
+  throw new Error('Error test successful.');
+});
+
 // default endpoint to catch all other requests
 app.use(function(req, res) {
   res.status(404).send('404 NOT FOUND');
