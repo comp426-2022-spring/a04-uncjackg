@@ -16,7 +16,7 @@ if (row === undefined) { // DB doesn't yet exist
 
     // Set a const that will contain your SQL commands to initialize the database.
     const sqlInit = `
-        CREATE TABLE accesslog ( remoteaddr TEXT, remoteuser TEXT, time DATE, method TEXT, url TEXT, protocol TEXT, httpversion TEXT, status TEXT, referer TEXT, useragent TEXT );
+        CREATE TABLE accesslog ( id INTEGER PRIMARY KEY, remoteaddr TEXT, remoteuser TEXT, time DATE, method TEXT, url TEXT, protocol TEXT, httpversion TEXT, status TEXT, referer TEXT, useragent TEXT );
     `;
 
     // Execute the above SQL command
