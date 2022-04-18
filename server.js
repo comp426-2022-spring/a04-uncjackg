@@ -2,6 +2,8 @@ import { coinFlip, coinFlips, countFlips, flipACoin } from './modules/coin.mjs';
 import minimist from 'minimist';
 import db from './database.js';
 import express from 'express';
+import morgan from 'morgan';
+import fs from 'fs';
 
 var HTTP_PORT = 5000;
 
@@ -44,6 +46,14 @@ const server = app.listen(HTTP_PORT, () => {
   console.log(`App listening on port ${HTTP_PORT}`);
 });
 
+if (args.log) {
+  // Use morgan for logging to files
+  // Create a write stream to append (flags: 'a') to a file
+  const WRITESTREAM = fs.createWriteStream('access.log', { flags: 'a' })
+  // Set up the access logging middleware
+  app.use(morgan('combined', { stream: WRITESTREAM }))
+}
+
 // database middleware
 app.use((req, res, next) => {
   let logdata = {
@@ -63,7 +73,7 @@ app.use((req, res, next) => {
   stmt.run(logdata.remoteaddr, logdata.remoteuser, logdata.time, logdata.method, logdata.url, logdata.protocol, logdata.httpversion, logdata.status, logdata.referer, logdata.useragent);
 
   next();
-})
+});
 
 // Make Express use its own built-in body parser for both urlencoded and JSON body data.
 app.use(express.urlencoded({ extended: true }));
