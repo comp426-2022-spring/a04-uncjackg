@@ -45,8 +45,8 @@ const app = express();
 const server = app.listen(HTTP_PORT, () => {
   console.log(`App listening on port ${HTTP_PORT}`);
 });
-console.log(args)
-if (args.log || args.log != 'false') {
+
+if (args.log && args.log != 'false') {
   // Use morgan for logging to files
   // Create a write stream to append (flags: 'a') to a file
   const WRITESTREAM = fs.createWriteStream('access.log', { flags: 'a' })
