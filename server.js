@@ -1,5 +1,6 @@
 import { coinFlip, coinFlips, countFlips, flipACoin } from './modules/coin.mjs';
 import minimist from 'minimist';
+import db from './database.js';
 import express from 'express';
 
 var HTTP_PORT = 5000;
@@ -43,8 +44,7 @@ const server = app.listen(HTTP_PORT, () => {
   console.log(`App listening on port ${HTTP_PORT}`);
 });
 
-// database 
-const db = require("./database.js")
+// database middleware
 app.use((req, res, next) => {
   let logdata = {
     remoteaddr: req.ip,
